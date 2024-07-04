@@ -2,7 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class DestinationResource extends JsonResource
@@ -14,6 +16,15 @@ class DestinationResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'destination_name' => $this->name,
+            'location' => $this->getLocation(),
+            'description' => $this->description,
+            'images' => $this->images,
+            'status' => $this->status,
+            'created_by' => new UserResource(User::find($this->created_by)),
+            'updated_by' => new UserResource(User::find($this->updated_by)),
+            'created_at' => $this->created_at->format('d-m-Y H:i:s'),
+        ];
     }
 }
