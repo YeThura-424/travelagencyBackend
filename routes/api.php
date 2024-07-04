@@ -25,3 +25,8 @@ Route::post('/login',[AuthController::class, 'login']);
 Route::middleware('app')->group(function() {
     Route::get('/start',[Controller::class, 'index']);
 });
+
+Route::middleware(['api','auth:sanctum'])->namespace('Api')->group(function() {
+    //Destination
+    Route::get('/destination','DestinationController@index');
+});
