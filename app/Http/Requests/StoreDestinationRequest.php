@@ -11,7 +11,7 @@ class StoreDestinationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreDestinationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string'],
+            'location' => 'required|json',
+            'image' => ['required','string'],
         ];
     }
 }

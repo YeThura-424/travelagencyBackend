@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\DestinationResource;
 use App\Repository\DestinationRepository;
+use App\Http\Resources\DestinationResource;
+use App\Http\Requests\StoreDestinationRequest;
 
 class DestinationController extends Controller
 {
@@ -20,7 +20,7 @@ class DestinationController extends Controller
         $destinations = $this->repo->getAllDestination();
         if(is_null($destinations)){
             return response()->json([
-                'status' => 422,
+                'status' => 404,
                 'message' => 'Data Not found for this Request!!',
                 'data' => []
             ]);
@@ -32,5 +32,10 @@ class DestinationController extends Controller
                 'data' => $result
             ]);
         } 
+    }
+
+    public function store(StoreDestinationRequest $request)
+    {
+        dd($request);
     }
 }
