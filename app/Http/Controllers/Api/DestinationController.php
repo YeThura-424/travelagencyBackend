@@ -36,6 +36,11 @@ class DestinationController extends Controller
 
     public function store(StoreDestinationRequest $request)
     {
-        dd($request);
+        $destination = $this->repo->store($request);
+        return response()->json([
+            'status' => 201,
+            'message' => 'Destination Created Successfully',
+            'data' => $destination
+    ]);
     }
 }

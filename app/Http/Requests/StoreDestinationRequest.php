@@ -24,7 +24,7 @@ class StoreDestinationRequest extends FormRequest
         return [
             'name' => ['required', 'string'],
             'location' => 'required|json',
-            'image' => ['required','string'],
+            'images' => ['required','string'],
         ];
     }
 }

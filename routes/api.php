@@ -29,4 +29,5 @@ Route::middleware('app')->group(function() {
 Route::middleware(['app','auth:sanctum'])->namespace('Api')->group(function() {
     //Destination
     Route::get('/destination','DestinationController@index');
+    Route::post('/destination/store','DestinationController@store');
 });

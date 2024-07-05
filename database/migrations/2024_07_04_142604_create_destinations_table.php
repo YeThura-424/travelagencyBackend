@@ -17,6 +17,7 @@ return new class extends Migration
             $table->jsonb('location');
             $table->string('description');
             $table->string('images')->nullable();
+            $table->string('status')->default('pending');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->softDeletes();
