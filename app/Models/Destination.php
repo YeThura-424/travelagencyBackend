@@ -13,6 +13,10 @@ class Destination extends Model
     protected $table = 'destinations';
     protected $connection = 'mysql';
 
+    const STATUS_PENDING = "pending";
+    const STATUS_APPROVED = "approved";
+    const STATUS_REJECTED = "rejected";
+
 
     protected $fillable = [
         'name','location','description','images','status','created_by','updated_by'

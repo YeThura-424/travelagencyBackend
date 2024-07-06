@@ -2,8 +2,9 @@
 
 namespace App\Repository;
 
-use App\Http\Requests\StoreDestinationRequest;
 use App\Models\Destination;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StoreDestinationRequest;
 
 class DestinationRepository
 {
@@ -20,20 +21,52 @@ class DestinationRepository
 
   public function store(StoreDestinationRequest $request)
   {
-    $name = $request->name;
-    $location = $request->location;
-    $descriptions = $request->description;
-    $images = $request->images;
-    $status = 'pending';
+    $file = $this->uploadFile($request);
+    $data = $this->createPayload($request);
 
-    $destination = new Destination();
-    $destination->name = $name;
-    $destination->location = $location;
-    $destination->description = $descriptions;
-    $destination->images = $images;
-    $destination->status = $status;
-    $destination->save();
+    $data['images'] = json_encode($file);
+    DB::beginTransaction();
+    try {
+      $destination = Destination::create($data);
+      if ($destination) {
+        $destination->update([
+          'status' => Destination::STATUS_APPROVED
+        ]);
+      }
+      return $destination;
+      DB::commit();
+    } catch (\Throwable $th) {
+      DB::rollBack();
+      throw $th;
+    }
+  }
 
-    return $destination;
+  public function uploadFile(StoreDestinationRequest $request)
+  {
+    if ($request->hasfile('images')) {
+      $i = 1;
+      $data = [];
+      foreach ($request->file('images') as $image) {
+        $imagename = time() . $i . '.' . $image->extension();
+        $image->move(public_path('images/destination'), $imagename);
+        $data[] = 'images/destination/' . $imagename;
+        $i++;
+      }
+
+      return $data;
+    } else {
+      return;
+    }
+  }
+
+  public function createPayload(StoreDestinationRequest $request)
+  {
+    $data = [
+      'name' => $request->name,
+      'location' => $request->location,
+      'description' => $request->description,
+    ];
+
+    return $data;
   }
 }
