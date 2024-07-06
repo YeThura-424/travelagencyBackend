@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Destination extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'destinations';
     protected $connection = 'mysql';
@@ -19,24 +19,28 @@ class Destination extends Model
 
 
     protected $fillable = [
-        'name','location','description','images','status','created_by','updated_by'
+        'name', 'location', 'description', 'images', 'status', 'created_by', 'updated_by'
     ];
 
     protected $casts = [
         'location' => 'json',
     ];
 
+    public function logs()
+    {
+        return $this->hasMany(DestinationStatusLog::class);
+    }
+
     public static function boot()
     {
         parent::boot();
 
-        self::creating(function($model){
+        self::creating(function ($model) {
             $model->created_by = auth()->id();
         });
 
-        self::updating(function($model) {
+        self::updating(function ($model) {
             $model->updated_by = auth()->id();
         });
     }
-
 }

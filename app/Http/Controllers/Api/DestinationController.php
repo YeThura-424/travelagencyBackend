@@ -44,4 +44,9 @@ class DestinationController extends Controller
             'data' => $destination
         ]);
     }
+
+    public function updateStatus($id)
+    {
+        $data = $this->repo->updateStatus($id);
+    }
 }

@@ -44,6 +44,15 @@ class DestinationRepository
         $destination->update([
           'status' => Destination::STATUS_PENDING
         ]);
+        $destination->logs()->create([
+          'code' => '12345',
+          'status' => Destination::STATUS_APPROVED,
+          'meta' => ['{
+                  "make": "Toyota",
+                  "model": "Camry",
+                  "year": 2020
+                  }'],
+        ]);
         DB::commit();
       }
       return $destination;
@@ -80,5 +89,22 @@ class DestinationRepository
     ];
 
     return $data;
+  }
+
+  public function updateStatus($id)
+  {
+    $destination = $this->model()->find($id);
+
+    $destination->logs()->create([
+      'code' => '12345',
+      'status' => Destination::STATUS_PENDING,
+      'meta' => ['{
+                  "make": "Toyota",
+                  "model": "Camry",
+                  "year": 2020
+                  }'],
+    ]);
+    // dd($destination);
+    return response('Success');
   }
 }
