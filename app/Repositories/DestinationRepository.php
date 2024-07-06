@@ -30,11 +30,11 @@ class DestinationRepository
       $destination = Destination::create($data);
       if ($destination) {
         $destination->update([
-          'status' => Destination::STATUS_APPROVED
+          'status' => Destination::STATUS_PENDING
         ]);
+        DB::commit();
       }
       return $destination;
-      DB::commit();
     } catch (\Throwable $th) {
       DB::rollBack();
       throw $th;
