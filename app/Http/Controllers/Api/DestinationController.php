@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repository\DestinationRepository;
 use App\Http\Resources\DestinationResource;
 use App\Http\Requests\StoreDestinationRequest;
+use Illuminate\Http\Request;
 
 class DestinationController extends Controller
 {
@@ -15,10 +16,10 @@ class DestinationController extends Controller
         $this->repo = $repo;
     }
 
-    public function index()
+    public function getAll(Request $request)
     {
-        $destinations = $this->repo->getAllDestination();
-        if(is_null($destinations)){
+        $destinations = $this->repo->getAll($request);
+        if (is_null($destinations)) {
             return response()->json([
                 'status' => 404,
                 'message' => 'Data Not found for this Request!!',
@@ -31,7 +32,7 @@ class DestinationController extends Controller
                 'message' => "Destinations Retrived Successfully",
                 'data' => $result
             ]);
-        } 
+        }
     }
 
     public function store(StoreDestinationRequest $request)
@@ -41,6 +42,6 @@ class DestinationController extends Controller
             'status' => 201,
             'message' => 'Destination Created Successfully',
             'data' => $destination
-    ]);
+        ]);
     }
 }

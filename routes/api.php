@@ -20,14 +20,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/login',[AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login']);
 
-Route::middleware('app')->group(function() {
-    Route::get('/start',[Controller::class, 'index']);
+Route::middleware('app')->group(function () {
+    Route::get('/start', [Controller::class, 'index']);
 });
 
-Route::middleware(['app','auth:sanctum'])->namespace('Api')->group(function() {
+Route::middleware(['app', 'auth:sanctum'])->namespace('Api')->group(function () {
     //Destination
-    Route::get('/destination','DestinationController@index');
-    Route::post('/destination/store','DestinationController@store');
+    Route::get('/destination', 'DestinationController@getAll');
+    Route::post('/destination/store', 'DestinationController@store');
 });

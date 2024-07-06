@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Models\Destination;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreDestinationRequest;
 
@@ -14,9 +15,20 @@ class DestinationRepository
     return new Destination();
   }
 
-  public function getAllDestination()
+  public function getAll($request)
   {
-    return $this->model()->all();
+    dd($request);
+    $query = $this->model();
+    if ($name = $request->name) {
+      $query = $query->where('name', $name);
+    }
+    if ($description = $request->description) {
+      $query = $query->where('description', 'LIKE', "%.{$description}.%");
+    }
+    if ($status = $request->status) {
+      $query = $query->where('status', $status);
+    }
+    return $query->paginate(10);
   }
 
   public function store(StoreDestinationRequest $request)
