@@ -31,6 +31,13 @@ class Destination extends Model
         return $this->hasMany(DestinationStatusLog::class);
     }
 
+    public function tours()
+    {
+        return $this->belongsToMany(Tour::class)
+            ->withPivot('title', 'description', 'image')
+            ->withTimestamps();
+    }
+
     public static function boot()
     {
         parent::boot();
