@@ -19,7 +19,14 @@ class Destination extends Model
 
 
     protected $fillable = [
-        'name', 'location', 'description', 'images', 'status', 'created_by', 'updated_by'
+        'code',
+        'name',
+        'location',
+        'description',
+        'images',
+        'status',
+        'created_by',
+        'updated_by'
     ];
 
     protected $casts = [
