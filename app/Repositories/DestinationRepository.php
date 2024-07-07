@@ -17,7 +17,6 @@ class DestinationRepository
 
   public function getAll($request)
   {
-    dd($request);
     $query = $this->model();
     if ($name = $request->name) {
       $query = $query->where('name', $name);
@@ -46,7 +45,7 @@ class DestinationRepository
         ]);
         $destination->logs()->create([
           'code' => '12345',
-          'status' => Destination::STATUS_APPROVED,
+          'status' => Destination::STATUS_PENDING,
           'meta' => ['{
                   "make": "Toyota",
                   "model": "Camry",
@@ -90,7 +89,10 @@ class DestinationRepository
 
     return $data;
   }
-
+  /**
+   * @param id;
+   * to update the destination from pending state
+   */
   public function updateStatus($id)
   {
     $destination = $this->model()->find($id);
@@ -104,7 +106,6 @@ class DestinationRepository
                   "year": 2020
                   }'],
     ]);
-    // dd($destination);
     return response('Success');
   }
 }
