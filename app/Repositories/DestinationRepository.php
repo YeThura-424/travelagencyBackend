@@ -6,6 +6,7 @@ use App\Models\Destination;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreDestinationRequest;
+use Carbon\Carbon;
 
 class DestinationRepository
 {
@@ -61,6 +62,17 @@ class DestinationRepository
     }
   }
 
+  //DES-2024-07-08-000001
+  public function generateCode()
+  {
+    $start = 'DES';
+    $date = Carbon::now()->format('Y-m-d');
+    $rand_num = rand('111111', '999999');
+    $code = $start . '-' . $date . '-' . $rand_num;
+
+    return $code;
+  }
+
   public function uploadFile(StoreDestinationRequest $request)
   {
     if ($request->hasfile('images')) {
@@ -82,6 +94,7 @@ class DestinationRepository
   public function createPayload(StoreDestinationRequest $request)
   {
     $data = [
+      'code' => $this->generateCode(),
       'name' => $request->name,
       'location' => $request->location,
       'description' => $request->description,

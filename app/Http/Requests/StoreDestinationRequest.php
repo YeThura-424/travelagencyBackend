@@ -22,6 +22,7 @@ class StoreDestinationRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'code' => 'required',
             'name' => ['required', 'string'],
             'location' => 'required|json',
             'images' => 'required',
