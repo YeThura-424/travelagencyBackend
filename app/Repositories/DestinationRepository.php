@@ -6,6 +6,7 @@ use App\Models\Destination;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreDestinationRequest;
+use App\Models\DestinationStatusLog;
 use Carbon\Carbon;
 
 class DestinationRepository
@@ -44,15 +45,7 @@ class DestinationRepository
         $destination->update([
           'status' => Destination::STATUS_PENDING
         ]);
-        $destination->logs()->create([
-          'code' => '12345',
-          'status' => Destination::STATUS_PENDING,
-          'meta' => ['{
-                  "make": "Toyota",
-                  "model": "Camry",
-                  "year": 2020
-                  }'],
-        ]);
+        DestinationStatusLog::recordStatusLog($destination, $request);
         DB::commit();
       }
       return $destination;
@@ -106,19 +99,26 @@ class DestinationRepository
    * @param id;
    * to update the destination from pending state
    */
-  public function updateStatus($id)
+  public function updateStatus(Request $request, $id)
   {
     $destination = $this->model()->find($id);
+    $destination_status = $destination->logs()->where('status', Destination::STATUS_APPROVED)->first();
+    if ($destination_status) {
+      $destination->status = Destination::STATUS_APPROVED;
+      $destination->save();
+      DestinationStatusLog::recordStatusLog($destination, $request);
 
-    $destination->logs()->create([
-      'code' => '12345',
-      'status' => Destination::STATUS_PENDING,
-      'meta' => ['{
-                  "make": "Toyota",
-                  "model": "Camry",
-                  "year": 2020
-                  }'],
-    ]);
-    return response('Success');
+      return response()->json([
+        'status' => 200,
+        'message' => 'Status Updated Successfully',
+        'data' => $destination,
+      ]);
+    } else {
+      return response()->json([
+        'status' => 422,
+        'message' => 'Current Action can not be done on the selected destination data!!',
+        'data' => null,
+      ]);
+    }
   }
 }

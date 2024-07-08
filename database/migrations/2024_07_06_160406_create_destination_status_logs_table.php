@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('code');
             $table->string('status');
             $table->unsignedBigInteger('destination_id');
-            $table->json('meta');
+            $table->jsonb('meta');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -17,4 +17,20 @@ class DestinationStatusLog extends Model
     protected $casts = [
         'meta' => 'json'
     ];
+
+    public static function recordStatusLog(Destination $destination, $request)
+    {
+        $meta = json_encode([
+            'data' => $request->all(),
+            'header' => $request->header(),
+            'uri' => $request->path()
+        ]);
+
+        self::create([
+            'code' => $destination->code,
+            'status' => $destination->status,
+            'destination_id' => $destination->id,
+            'meta' => $meta,
+        ]);
+    }
 }
