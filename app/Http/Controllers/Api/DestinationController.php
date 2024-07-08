@@ -49,4 +49,9 @@ class DestinationController extends Controller
     {
         return $this->repo->approve($request, $id);
     }
+
+    public function reject(Request $request, $id)
+    {
+        return $this->repo->reject($request, $id);
+    }
 }

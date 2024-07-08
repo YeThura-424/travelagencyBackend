@@ -30,5 +30,6 @@ Route::middleware(['app', 'auth:sanctum'])->namespace('Api')->group(function () 
     //Destination
     Route::get('/destination', 'DestinationController@getAll');
     Route::post('/destination/store', 'DestinationController@store');
-    Route::post('/destination/update/{id}', 'DestinationController@approve');
+    Route::post('/destination/approve/{id}', 'DestinationController@approve');
+    Route::post('/destination/reject/{id}', 'DestinationController@reject');
 });

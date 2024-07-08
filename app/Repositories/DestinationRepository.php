@@ -116,4 +116,22 @@ class DestinationRepository
       return json_response('422', 'Current action can not be done', []);
     }
   }
+
+  public function reject(Request $request, $id)
+  {
+    $destination = $this->model()->find($id);
+    $destination_status = $destination->logs()
+      ->where('status', Destination::STATUS_APPROVED)
+      ->first();
+
+    if ($destination_status) {
+      return json_response('422', 'Approved destination data can not be rejected!!', []);
+    } else {
+      $destination->status = Destination::STATUS_REJECTED;
+      $destination->save();
+
+      DestinationStatusLog::recordStatusLog($destination, $request);
+      return json_response('200', 'Status update successfully', $destination);
+    }
+  }
 }
