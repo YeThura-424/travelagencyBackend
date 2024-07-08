@@ -45,8 +45,8 @@ class DestinationController extends Controller
         ]);
     }
 
-    public function updateStatus($id)
+    public function approve(Request $request, $id)
     {
-        $data = $this->repo->updateStatus($id);
+        return $this->repo->approve($request, $id);
     }
 }

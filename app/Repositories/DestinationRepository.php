@@ -99,26 +99,21 @@ class DestinationRepository
    * @param id;
    * to update the destination from pending state
    */
-  public function updateStatus(Request $request, $id)
+  public function approve(Request $request, $id)
   {
     $destination = $this->model()->find($id);
-    $destination_status = $destination->logs()->where('status', Destination::STATUS_APPROVED)->first();
+    $destination_status = $destination->logs()
+      ->where('status', Destination::STATUS_PENDING)
+      ->first();
     if ($destination_status) {
+
       $destination->status = Destination::STATUS_APPROVED;
       $destination->save();
-      DestinationStatusLog::recordStatusLog($destination, $request);
 
-      return response()->json([
-        'status' => 200,
-        'message' => 'Status Updated Successfully',
-        'data' => $destination,
-      ]);
+      DestinationStatusLog::recordStatusLog($destination, $request);
+      return json_response('200', 'Status update successfully', $destination);
     } else {
-      return response()->json([
-        'status' => 422,
-        'message' => 'Current Action can not be done on the selected destination data!!',
-        'data' => null,
-      ]);
+      return json_response('422', 'Current action can not be done', []);
     }
   }
 }
