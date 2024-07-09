@@ -27,9 +27,9 @@ class Location extends Command
     public function handle()
     {
         $location = new LocationService();
-        $region = $location->getRegion();
+        // $region = $location->getRegion();
+        $region = $location->getTown();
         logger($region);
-        info('here');
         dd('here');
     }
 }
