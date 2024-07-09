@@ -28,7 +28,8 @@ class Location extends Command
     {
         $location = new LocationService();
         // $region = $location->getRegion();
-        $region = $location->getTown();
+        // $region = $location->getTown();
+        $region = $location->getTownship();
         logger($region);
         dd('here');
     }

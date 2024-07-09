@@ -49,4 +49,29 @@ class LocationService
     }
     return $town;
   }
+
+  public function getTownship()
+  {
+    $township = [];
+    $region_id = 1;
+    foreach ($this->rawLocation as $location) {
+      $town_id = 1;
+      foreach ($location['districts'] as $towns) {
+        $id = 1;
+        foreach ($towns['townships'] as $data) {
+          $township[] = [
+            'id' => $id,
+            'region_id' => $region_id,
+            'town_id' => $town_id,
+            'name_en' => $data['eng'],
+            'name_mm' => $data['mm']
+          ];
+          $id++;
+        }
+        $town_id++;
+      }
+      $region_id++;
+    }
+    return $township;
+  }
 }
