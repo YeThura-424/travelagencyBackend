@@ -2,8 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Services\LocationService;
+use App\Models\Township;
 use Illuminate\Console\Command;
+use App\Services\LocationService;
 
 class Location extends Command
 {
@@ -29,7 +30,10 @@ class Location extends Command
         $location = new LocationService();
         // $region = $location->getRegion();
         // $region = $location->getTown();
-        $region = $location->getTownship();
+        // $region = $location->getTownship();
+
+        $location = Township::latest()->first();
+        $region = $location->region;
         logger($region);
         dd('here');
     }

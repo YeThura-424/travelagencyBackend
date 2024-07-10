@@ -12,4 +12,14 @@ class Township extends Model
     protected $fillable = [
         'region_id', 'town_id', 'name_en', 'name_mm'
     ];
+
+    public function town()
+    {
+        return $this->belongsTo(Town::class);
+    }
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
 }

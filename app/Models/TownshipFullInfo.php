@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class TownshipFullInfo extends Model
 {
+
+    protected $table = 'township_full_info';
     use HasFactory;
 
     protected $fillable = [

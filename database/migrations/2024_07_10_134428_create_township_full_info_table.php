@@ -17,7 +17,7 @@ return new class extends Migration
             $table->json('town');
             $table->string('name_en');
             $table->string('name_mm');
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 
