@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Town;
 use App\Models\Region;
+use App\Models\Township;
 use Illuminate\Console\Command;
 use App\Services\LocationService;
 
@@ -30,8 +31,8 @@ class LocationInstaller extends Command
     {
         $rawLocation = collect(config('region.data'));
 
-        // $this->installRegion($rawLocation);
-        // $this->installTown($rawLocation);
+        $this->installRegion($rawLocation);
+        $this->installTown($rawLocation);
         $this->installTownship($rawLocation);
         // $this->installTownshipFullInfo();
     }
@@ -69,5 +70,21 @@ class LocationInstaller extends Command
 
     private function installTownship($locations)
     {
+        $region_id = 1;
+        foreach ($locations as $region) {
+            foreach ($region['districts'] as $town) {
+                $town_data = Town::where('name_en', $town['eng'])->first();
+                foreach ($town['townships'] as $township) {
+                    Township::create([
+                        'region_id' => $region_id,
+                        'town_id' => $town_data->id,
+                        'name_en' => $township['eng'],
+                        'name_mm' => $township['mm'],
+                    ]);
+                }
+            }
+            $region_id++;
+        }
+        $this->info('Township Created Successfully');
     }
 }

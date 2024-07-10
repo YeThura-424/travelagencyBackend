@@ -15,17 +15,14 @@ class LocationService
   public function getRegion()
   {
     $region = [];
-    $id = 1;
     foreach ($this->rawLocation as $location) {
 
       $region[] = [
-        'id' => $id,
-        'name_mm' => $location['eng'],
-        'name_en' => $location['mm'],
+        'name_en' => $location['eng'],
+        'name_mm' => $location['mm'],
         'lat' => $location['lat'],
         'lng' => $location['lng']
       ];
-      $id++;
     }
     return $region;
   }
