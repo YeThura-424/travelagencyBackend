@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('region', function (Blueprint $table) {
+        Schema::create('townships', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('region_id');
+            $table->unsignedBigInteger('town_id');
             $table->string('name_en');
-            $table->string('name_en');
-            $table->float('lat',  10,  8);
-            $table->float('lng', 10, 8);
+            $table->string('name_mm');
             // $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('region');
+        Schema::dropIfExists('township');
     }
 };
