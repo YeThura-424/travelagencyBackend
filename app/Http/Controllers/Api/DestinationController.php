@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Repository\DestinationRepository;
-use App\Http\Resources\DestinationResource;
-use App\Http\Requests\StoreDestinationRequest;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\DestinationResource;
+use App\Repositories\DestinationRepository;
+use App\Http\Requests\StoreDestinationRequest;
 
 class DestinationController extends Controller
 {

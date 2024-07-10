@@ -26,7 +26,7 @@ Route::middleware('app')->group(function () {
     Route::get('/start', [Controller::class, 'index']);
 });
 
-Route::middleware(['app', 'auth:sanctum'])->namespace('Api')->group(function () {
+Route::middleware('auth:sanctum')->namespace('Api')->group(function () {
     //Destination
     Route::get('/destination', 'DestinationController@getAll');
     Route::post('/destination/store', 'DestinationController@store');
