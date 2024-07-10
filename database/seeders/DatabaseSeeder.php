@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,5 +23,7 @@ class DatabaseSeeder extends Seeder
             'phone' => '0987654321',
             'address' => 'Yangon'
         ]);
+        dump('php artisan install:app-location');
+        Artisan::call('install:app-location');
     }
 }
