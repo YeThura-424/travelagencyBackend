@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Township extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'region_id', 'town_id', 'name_en', 'name_mm'
+    ];
 }

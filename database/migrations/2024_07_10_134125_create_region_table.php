@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('region', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('name_en');
+            $table->string('name_en');
+            $table->float('lat',  10,  8);
+            $table->float('lng', 10, 8);
+            // $table->timestamps();
         });
     }
 
