@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreDestinationRequest;
 use App\Models\DestinationStatusLog;
+use App\Services\LocationService;
 use Carbon\Carbon;
 
 class DestinationRepository
@@ -15,6 +16,11 @@ class DestinationRepository
   public function model()
   {
     return new Destination();
+  }
+
+  public function location()
+  {
+    return new LocationService;
   }
 
   public function getAll($request)
@@ -89,7 +95,7 @@ class DestinationRepository
     $data = [
       'code' => $this->generateCode(),
       'name' => $request->name,
-      'location' => $request->location,
+      'location' => $this->location()->getTownshipFullInfoByTownship($request->location),
       'description' => $request->description,
     ];
 

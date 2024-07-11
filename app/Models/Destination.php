@@ -11,7 +11,7 @@ class Destination extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'destinations';
-    protected $connection = 'mysql';
+    protected $connection = 'sqlite';
 
     const STATUS_PENDING = "pending";
     const STATUS_APPROVED = "approved";
