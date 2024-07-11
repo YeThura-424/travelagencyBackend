@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('images')->nullable();
             $table->string('status')->default('pending');
+            $table->string('remark')->nullable(); // to add remark when making rejection
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->softDeletes();

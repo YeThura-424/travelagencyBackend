@@ -25,6 +25,7 @@ class Destination extends Model
         'description',
         'images',
         'status',
+        'remark', // for rejection
         'created_by',
         'updated_by'
     ];
