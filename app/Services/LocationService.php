@@ -27,4 +27,24 @@ class LocationService
   {
     return TownshipFullInfo::all();
   }
+
+  public function getRegionById($id)
+  {
+    return Region::find($id);
+  }
+
+  public function getTownById($id)
+  {
+    return Town::find($id);
+  }
+
+  public function getTownshipById($id)
+  {
+    return Township::find($id);
+  }
+
+  public function getTownshipFullInfoByTownship($id)
+  {
+    return TownshipFullInfo::find($id);
+  }
 }
