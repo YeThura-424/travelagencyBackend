@@ -2,10 +2,31 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\TourResource;
+use App\Repositories\TourRepository;
+use App\Http\Requests\StoreTourRequest;
 
 class TourController extends Controller
 {
-    //
+    protected $repo;
+
+    public function __construct(TourRepository $repo)
+    {
+        $this->repo = $repo;
+    }
+
+    public function index()
+    {
+        $tour = $this->repo->index();
+        if ($tour) {
+            $data = TourResource::collection($tour);
+            $message = "Tour Data Retrived Successfully";
+            return json_response('200', $message, $data);
+        } else {
+            $message = "No Tour Data found!!";
+            return json_response('422', $message, []);
+        }
+    }
 }
