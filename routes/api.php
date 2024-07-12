@@ -33,6 +33,10 @@ Route::middleware('auth:sanctum')->namespace('Api')->group(function () {
     Route::post('/destination/approve/{id}', 'DestinationController@approve');
     Route::post('/destination/reject/{id}', 'DestinationController@reject');
 
+    //Tour
+    Route::get('/tour', 'TourController@index');
+    Route::post('/tour/store', 'TourController@store');
+
     //Location
     Route::get('/township', 'LocationController@getTownship');
 });

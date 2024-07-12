@@ -2,8 +2,9 @@
 
 namespace App\Repositories;
 
-use App\Http\Requests\StoreTourRequest;
 use App\Models\Tour;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StoreTourRequest;
 
 class TourRepository
 {
@@ -19,6 +20,25 @@ class TourRepository
 
   public function store(StoreTourRequest $request)
   {
-    dd('here');
+    $data = $this->createPayload($request);
+    DB::beginTransaction();
+    try {
+      $tour = Tour::create($data);
+      if ($tour) {
+        $tour->update([
+          'status' => Tour::STARUS_PENDING
+        ]);
+        DB::commit();
+      }
+      return $tour;
+    } catch (\Throwable $th) {
+      DB::rollBack();
+      throw $th;
+    }
+  }
+
+  private function createPayload($request)
+  {
+    //
   }
 }

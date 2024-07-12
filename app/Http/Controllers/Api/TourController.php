@@ -29,4 +29,17 @@ class TourController extends Controller
             return json_response('422', $message, []);
         }
     }
+
+    public function store(StoreTourRequest $request)
+    {
+        $tour = $this->repo->store($request);
+        if ($tour) {
+            $data = new TourResource($tour);
+            $message = "Tour Created Successfully!";
+            return json_response('201', $message, $data);
+        } else {
+            $message = "Error Creating Tour Package!!";
+            return json_response('422', $message, []);
+        }
+    }
 }

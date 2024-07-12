@@ -9,9 +9,9 @@ class Tour extends Model
 {
     use HasFactory;
 
-    const STARUS_PENDING = 'pending';
-    const STATUS_ONGOING = 'ongoing';
-    const STATUS_OVER = 'over';
+    public const STARUS_PENDING = 'pending';
+    public const STATUS_ONGOING = 'ongoing';
+    public const STATUS_OVER = 'over';
     protected $fillable = [
         'name',
         'description',
