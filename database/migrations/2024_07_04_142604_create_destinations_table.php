@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('code');
             $table->string('name');
             $table->jsonb('location');
+            $table->string('place');
             $table->string('description');
             $table->string('images')->nullable();
             $table->string('status')->default('pending');

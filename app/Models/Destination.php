@@ -22,6 +22,7 @@ class Destination extends Model
         'code',
         'name',
         'location',
+        'place',
         'description',
         'images',
         'status',
