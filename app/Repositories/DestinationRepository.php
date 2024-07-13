@@ -96,6 +96,7 @@ class DestinationRepository
       'code' => $this->generateCode(),
       'name' => $request->name,
       'location' => $this->location()->getTownshipFullInfoByTownship($request->location),
+      'place' => $request->place,
       'description' => $request->description,
     ];
 

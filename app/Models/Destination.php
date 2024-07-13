@@ -22,7 +22,7 @@ class Destination extends Model
         'code',
         'name',
         'location',
-        'place',
+        'place', // မြို့တစ်မြို့ရဲ့ အထင်ကရနေရာတွေရဲ့ နာမည် 
         'description',
         'images',
         'status',
