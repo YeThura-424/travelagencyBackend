@@ -6,6 +6,7 @@ use App\Models\Destination;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreDestinationRequest;
+use App\Http\Resources\DestinationResource;
 use App\Models\DestinationStatusLog;
 use App\Services\LocationService;
 use Carbon\Carbon;
@@ -139,6 +140,20 @@ class DestinationRepository
 
       DestinationStatusLog::recordStatusLog($destination, $request);
       return json_response('200', 'Status update successfully', $destination);
+    }
+  }
+
+  public function detail($id)
+  {
+    $destination = Destination::find($id);
+    if ($destination) {
+      $message = "Destination Retrived Successfully";
+      $data = new DestinationResource($destination);
+
+      return json_response('200', $message, $data);
+    } else {
+      $message = "Destination Data not Found";
+      return json_response('404', $message, []);
     }
   }
 }
