@@ -22,6 +22,7 @@ class DestinationResource extends JsonResource
             'description' => $this->description,
             'images' => $this->images,
             'status' => $this->status,
+            'status' => $this->status,
             'created_by' => new UserResource(User::find($this->created_by)),
             'updated_by' => new UserResource(User::find($this->updated_by)),
             'created_at' => $this->created_at->format('d-m-Y H:i:s'),
