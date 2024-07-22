@@ -18,7 +18,7 @@ class DestinationResource extends JsonResource
     {
         return [
             'destination_name' => $this->name,
-            // 'location' => $this->getLocation(),
+            'location' => $this->getLocation(),
             'description' => $this->description,
             'images' => $this->images,
             'status' => $this->status,

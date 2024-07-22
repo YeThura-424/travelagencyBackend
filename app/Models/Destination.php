@@ -59,4 +59,9 @@ class Destination extends Model
             $model->updated_by = auth()->id();
         });
     }
+
+    public function getLocation()
+    {
+        return $this->location;
+    }
 }
