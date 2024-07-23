@@ -9,6 +9,9 @@ class Tour extends Model
 {
     use HasFactory;
 
+    protected $table = 'tours';
+    protected $connection = 'sqlite';
+
     public const STARUS_PENDING = 'pending';
     public const STATUS_ONGOING = 'ongoing';
     public const STATUS_OVER = 'over';

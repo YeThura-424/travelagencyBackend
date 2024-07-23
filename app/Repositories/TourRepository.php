@@ -24,6 +24,7 @@ class TourRepository
   {
     $data = $this->createPayload($request);
     $tourItem = json_decode($request->tourItem);
+    dd('here');
     DB::beginTransaction();
     try {
       $tour = Tour::create($data);
