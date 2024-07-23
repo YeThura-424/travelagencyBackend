@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Tour;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreTourRequest;
+use App\Http\Resources\TourResource;
 use Illuminate\Support\Carbon;
 
 class TourRepository
@@ -73,5 +74,19 @@ class TourRepository
     $image = 'images/destination/' . $imagename;
 
     return $image;
+  }
+
+  public function detail($id)
+  {
+    $tour = Tour::find($id);
+    if ($tour) {
+      $message = "Tour Retrived Successfully";
+      $data = new TourResource($tour);
+
+      return json_response('200', $message, $data);
+    } else {
+      $message = "Tour Data not Found";
+      return json_response('404', $message, []);
+    }
   }
 }
