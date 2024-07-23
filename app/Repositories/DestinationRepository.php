@@ -75,7 +75,7 @@ class DestinationRepository
 
   public function uploadFile(StoreDestinationRequest $request)
   {
-    if ($request->hasfile('images')) {
+    if ($request->hasFile('images')) {
       $i = 1;
       $data = [];
       foreach ($request->file('images') as $image) {

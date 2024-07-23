@@ -68,6 +68,10 @@ class TourRepository
 
   private function uploadFile($files)
   {
-    return [];
+    $imagename = time() . '.' . $files->extension();
+    $files->move(public_path('images/tour'), $imagename);
+    $image = 'images/destination/' . $imagename;
+
+    return $image;
   }
 }
