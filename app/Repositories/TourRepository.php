@@ -24,7 +24,6 @@ class TourRepository
   {
     $data = $this->createPayload($request);
     $tourItem = json_decode($request->tourItem);
-    dd('here');
     DB::beginTransaction();
     try {
       $tour = Tour::create($data);
@@ -36,7 +35,7 @@ class TourRepository
           $id = $item->id;
           $title = $item->title;
           $description = $item->description;
-          $image = $this->uploadFile($item->images);
+          $image = $this->uploadFile($item->image);
 
           $tour->destinations()->attach($id, [
             'title' => $title,
@@ -70,11 +69,11 @@ class TourRepository
 
   private function uploadFile($files)
   {
-    $imagename = time() . '.' . $files->extension();
-    $files->move(public_path('images/tour'), $imagename);
-    $image = 'images/destination/' . $imagename;
+    // $imagename = time() . '.' . $files->extension();
+    // $files->move(public_path('images/tour'), $imagename);
+    // $image = 'images/destination/' . $imagename;
 
-    return $image;
+    return $files;
   }
 
   public function detail($id)

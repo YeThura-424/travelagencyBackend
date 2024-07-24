@@ -38,11 +38,13 @@ class Location extends Command
         // dd('here');
         $data = [
             [
+                "id" => 1,
                 "title" => "Test Title 1",
                 "description" => "Test Description 1",
                 "image" => "TestImg1.png"
             ],
             [
+                "id" => 2,
                 "title" => "Test Title 2",
                 "description" => "Test Description 2",
                 "image" => "TestImg2.png"
