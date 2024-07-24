@@ -22,7 +22,7 @@ class StoreTourRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'unique:tours.name'],
+            'name' => ['required', 'unique:tours,name'],
             'description' => 'required',
             'price' => 'required|numeric',
             'duration' => 'required|numeric',
