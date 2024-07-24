@@ -32,7 +32,6 @@ class TourController extends Controller
 
     public function store(StoreTourRequest $request)
     {
-        dd('here');
         $tour = $this->repo->store($request);
         if ($tour) {
             $data = new TourResource($tour);
