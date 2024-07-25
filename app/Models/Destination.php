@@ -43,7 +43,7 @@ class Destination extends Model
     public function tours()
     {
         return $this->belongsToMany(Tour::class, 'destination_tour_details')
-            ->withPivot('title', 'description', 'image')
+            ->withPivot('title', 'description')
             ->withTimestamps();
     }
 

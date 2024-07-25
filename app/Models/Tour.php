@@ -36,7 +36,20 @@ class Tour extends Model
     public function destinations()
     {
         return $this->belongsToMany(Destination::class, 'destination_tour_details')
-            ->withPivot('title', 'description', 'image')
+            ->withPivot('title', 'description')
             ->withTimestamps();
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::creating(function ($model) {
+            $model->created_by = auth()->id();
+        });
+
+        self::updating(function ($model) {
+            $model->updated_by = auth()->id();
+        });
     }
 }
