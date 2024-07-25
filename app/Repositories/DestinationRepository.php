@@ -39,6 +39,12 @@ class DestinationRepository
     return $query->paginate(10);
   }
 
+  /**
+   * store
+   * store function for destination 
+   * @param  mixed $request
+   * @return void
+   */
   public function store(StoreDestinationRequest $request)
   {
     $file = $this->uploadFile($request);
@@ -62,7 +68,10 @@ class DestinationRepository
     }
   }
 
-  //DES-2024-07-08-000001
+  /**
+   * return (DES-2024-07-08-000001)
+   * code generator
+   */
   public function generateCode()
   {
     $start = 'DES';
@@ -72,19 +81,23 @@ class DestinationRepository
 
     return $code;
   }
-
+  /**
+   *  destination create လုပ်တဲ့ချိန် လိုအပ်တဲ့ file တွေ သိမ်းဖို့ 
+   *  to upload and save files when creating destination
+   */
   public function uploadFile(StoreDestinationRequest $request)
   {
     if ($request->hasFile('images')) {
       $i = 1;
       $data = [];
-      foreach ($request->file('images') as $image) {
+      $files = $request->images;
+      foreach ($files as $image) {
         $imagename = time() . $i . '.' . $image->extension();
         $image->move(public_path('images/destination'), $imagename);
         $data[] = 'images/destination/' . $imagename;
+        dd($data);
         $i++;
       }
-
       return $data;
     } else {
       return;
