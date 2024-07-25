@@ -17,7 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger('destination_id');
             $table->string('title');
             $table->string('description');
-            $table->string('image');
             $table->softDeletes();
             $table->timestamps();
         });

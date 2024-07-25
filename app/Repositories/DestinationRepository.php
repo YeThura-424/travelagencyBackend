@@ -89,13 +89,12 @@ class DestinationRepository
   {
     if ($request->hasFile('images')) {
       $i = 1;
-      $data = [];
       $files = $request->images;
+      $data = [];
       foreach ($files as $image) {
         $imagename = time() . $i . '.' . $image->extension();
         $image->move(public_path('images/destination'), $imagename);
         $data[] = 'images/destination/' . $imagename;
-        dd($data);
         $i++;
       }
       return $data;
