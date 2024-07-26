@@ -24,6 +24,7 @@ class UpdateTourExpiredField extends Command
 
     /**
      * Execute the console command.
+     * ဒါက Tour တစ်ခုရဲ့ သက်မှတ်ထားတဲ့ end date ကျော် သွားတဲ့ အခါမှာ status ကို over ပြောင်းဖို့ 
      */
     public function handle()
     {
