@@ -16,6 +16,7 @@ class Tour extends Model
     public const STATUS_ONGOING = 'ongoing';
     public const STATUS_OVER = 'over';
     protected $fillable = [
+        'code',
         'name',
         'description',
         'price',
