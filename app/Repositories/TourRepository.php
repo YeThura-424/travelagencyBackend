@@ -20,6 +20,20 @@ class TourRepository
     return $this->getModel()->all();
   }
 
+  /**
+   * return (TR-2024-07-08-000001)
+   * code generator
+   */
+  public function generateCode()
+  {
+    $start = 'TR';
+    $date = Carbon::now()->format('Y-m-d');
+    $rand_num = rand('111111', '999999');
+    $code = $start . '-' . $date . '-' . $rand_num;
+
+    return $code;
+  }
+
   public function store(StoreTourRequest $request)
   {
     $data = $this->createPayload($request);
@@ -55,6 +69,7 @@ class TourRepository
   private function createPayload($request)
   {
     $payload = [
+      'code' => $this->generateCode(),
       'name' => $request->name,
       'description' => $request->description,
       'price' => $request->price,
