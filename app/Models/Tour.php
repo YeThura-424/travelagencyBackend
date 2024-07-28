@@ -41,6 +41,11 @@ class Tour extends Model
             ->withTimestamps();
     }
 
+    public function logs()
+    {
+        return $this->hasMany(TourStatusLog::class);
+    }
+
     public static function boot()
     {
         parent::boot();
