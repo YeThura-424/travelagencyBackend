@@ -8,6 +8,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\TourResource;
 use App\Http\Requests\StoreTourRequest;
+use App\Models\TourStatusLog;
 
 class TourRepository
 {
@@ -46,6 +47,8 @@ class TourRepository
         $tour->update([
           'status' => Tour::STATUS_PENDING
         ]);
+
+        TourStatusLog::recordStatusLog($tour, $request);
         foreach ($tourItem as $item) {
           $id = $item->id;
           $title = $item->title;
@@ -95,10 +98,10 @@ class TourRepository
   public function approve(Request $request, $id)
   {
     $tour = $this->getModel()->find($id);
-    $destination_status = $tour->logs()
+    $tour_status = $tour->logs()
       ->where('status', Tour::STATUS_PENDING)
       ->first();
-    if ($destination_status) {
+    if ($tour_status) {
 
       $tour->status = Tour::STATUS_ONGOING;
       $tour->save();
