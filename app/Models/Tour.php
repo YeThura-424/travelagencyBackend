@@ -12,7 +12,7 @@ class Tour extends Model
     protected $table = 'tours';
     protected $connection = 'sqlite';
 
-    public const STARUS_PENDING = 'pending';
+    public const STATUS_PENDING = 'pending';
     public const STATUS_ONGOING = 'ongoing';
     public const STATUS_OVER = 'over';
     protected $fillable = [

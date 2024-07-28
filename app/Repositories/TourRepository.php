@@ -3,10 +3,11 @@
 namespace App\Repositories;
 
 use App\Models\Tour;
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\StoreTourRequest;
-use App\Http\Resources\TourResource;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use App\Http\Resources\TourResource;
+use App\Http\Requests\StoreTourRequest;
 
 class TourRepository
 {
@@ -43,7 +44,7 @@ class TourRepository
       $tour = Tour::create($data);
       if ($tour) {
         $tour->update([
-          'status' => Tour::STARUS_PENDING
+          'status' => Tour::STATUS_PENDING
         ]);
         foreach ($tourItem as $item) {
           $id = $item->id;
@@ -89,6 +90,24 @@ class TourRepository
     // $image = 'images/destination/' . $imagename;
 
     return $files;
+  }
+
+  public function approve(Request $request, $id)
+  {
+    $tour = $this->getModel()->find($id);
+    $destination_status = $tour->logs()
+      ->where('status', Tour::STATUS_PENDING)
+      ->first();
+    if ($destination_status) {
+
+      $tour->status = Tour::STATUS_ONGOING;
+      $tour->save();
+
+      // DestinationStatusLog::recordStatusLog($tour, $request);
+      return json_response('200', 'Status update successfully', $tour);
+    } else {
+      return json_response('422', 'Current action can not be done', []);
+    }
   }
 
   public function detail($id)
