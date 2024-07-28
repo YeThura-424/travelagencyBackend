@@ -23,7 +23,7 @@ class TourRepository
   }
 
   /**
-   * return (TR-2024-07-08-000001)
+   * @return ('TR-2024-07-08-000001')
    * code generator
    */
   public function generateCode()
@@ -36,6 +36,12 @@ class TourRepository
     return $code;
   }
 
+  /**
+   * store fresh tour package data with status pending
+   * add tour detail (pivot with destination)
+   * @param  mixed $request
+   * @return void
+   */
   public function store(StoreTourRequest $request)
   {
     $data = $this->createPayload($request);
@@ -95,6 +101,14 @@ class TourRepository
     return $files;
   }
 
+  /**
+   * to approve pending status tour to ongoing
+   * will only approve with status pending
+   * add status log for making ongoing in log
+   * @param  mixed $request
+   * @param  mixed $id
+   * @return void
+   */
   public function approve(Request $request, $id)
   {
     $tour = $this->getModel()->find($id);
@@ -106,7 +120,7 @@ class TourRepository
       $tour->status = Tour::STATUS_ONGOING;
       $tour->save();
 
-      // DestinationStatusLog::recordStatusLog($tour, $request);
+      TourStatusLog::recordStatusLog($tour, $request);
       return json_response('200', 'Status update successfully', $tour);
     } else {
       return json_response('422', 'Current action can not be done', []);
