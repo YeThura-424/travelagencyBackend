@@ -6,6 +6,10 @@ use App\Models\Tour;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
+use function PHPUnit\Framework\isEmpty;
+use function PHPUnit\Framework\isNan;
+use function PHPUnit\Framework\isNull;
+
 class UpdateTourExpiredField extends Command
 {
     /**
@@ -32,17 +36,19 @@ class UpdateTourExpiredField extends Command
         $tours = Tour::whereDate('end_date', $today)
             ->where('status', Tour::STATUS_ONGOING)
             ->get();
-
-        if (isset($tours)) {
+        // dd($tours);
+        if ($tours->isNotEmpty()) {
             foreach ($tours as $tour) {
                 $tour->update([
                     'status' => Tour::STATUS_OVER
                 ]);
 
                 logger("Tour status with name $tour->name has been updated Successfully");
+                $this->info("Tour status with name $tour->name has been updated Successfully");
             }
         } else {
             logger("No tour data found to update the status OVER for $today ");
+            $this->info("No tour data found to update the status OVER for $today ");
         }
     }
 }
