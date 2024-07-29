@@ -141,10 +141,15 @@ class TourRepository
     }
   }
 
+  /**
+   * to re_activate the expired tour
+   * will update additional fields as well
+   * @param  mixed $request
+   * @param  mixed $id
+   * @return void
+   */
   public function reactivate(Request $request, $id)
   {
-    // logic for reactivating the tour package
-
     $expired_tour = Tour::find($id)->where('status', Tour::STATUS_OVER);
     if (isset($expired_tour)) {
       DB::beginTransaction();
@@ -163,12 +168,14 @@ class TourRepository
         $expired_tour->update($data);
         TourStatusLog::recordStatusLog($expired_tour, $request);
         DB::commit();
+
+        return $expired_tour;
       } catch (\Throwable $th) {
         DB::rollBack();
         throw $th;
       }
     } else {
-      dd('no data for updating');
+      return "Cannot update current tour!!";
     }
   }
 }
