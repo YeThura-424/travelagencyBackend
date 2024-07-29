@@ -169,13 +169,13 @@ class TourRepository
         TourStatusLog::recordStatusLog($expired_tour, $request);
         DB::commit();
 
-        return $expired_tour;
+        return json_response('200', 'Tour Package reactivated successfully', $expired_tour);
       } catch (\Throwable $th) {
         DB::rollBack();
         throw $th;
       }
     } else {
-      return "Cannot update current tour!!";
+      return json_response('422', 'Current action can not be done', []);
     }
   }
 }

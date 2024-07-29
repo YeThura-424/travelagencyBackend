@@ -42,4 +42,14 @@ class TourController extends Controller
             return json_response('422', $message, []);
         }
     }
+
+    public function approve(Request $request, $id)
+    {
+        return $this->repo->approve($request, $id);
+    }
+
+    public function reactivate(Request $request, $id)
+    {
+        return $this->repo->reactivate($request, $id);
+    }
 }
