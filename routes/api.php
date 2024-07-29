@@ -36,6 +36,8 @@ Route::middleware('auth:sanctum')->namespace('Api')->group(function () {
     //Tour
     Route::get('/tour', 'TourController@index');
     Route::post('/tour/store', 'TourController@store');
+    Route::post('/tour/approve/{id}', 'TourController@approve');
+    Route::post('/tour/reactivate/{id}', 'TourController@reactivate');
 
     //Location
     Route::get('/township', 'LocationController@getTownship');
