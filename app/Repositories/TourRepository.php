@@ -140,4 +140,16 @@ class TourRepository
       return json_response('404', $message, []);
     }
   }
+
+  public function reactivate(Request $request, $id)
+  {
+    // logic for reactivating the tour package
+
+    $expired_tour = Tour::find($id)->where('status', Tour::STATUS_OVER);
+    if ($expired_tour) {
+      dd('update');
+    } else {
+      dd('no data for updating');
+    }
+  }
 }
