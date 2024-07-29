@@ -146,8 +146,27 @@ class TourRepository
     // logic for reactivating the tour package
 
     $expired_tour = Tour::find($id)->where('status', Tour::STATUS_OVER);
-    if ($expired_tour) {
-      dd('update');
+    if (isset($expired_tour)) {
+      DB::beginTransaction();
+      try {
+        $data = [
+          'name' => $request->name,
+          'description' => $request->description,
+          'price' => $request->price,
+          'duration' => $request->duration,
+          'start_date' => $request->duration,
+          'end_date' => $request->end_date,
+          'max_people' => $request->max_people,
+          'status' => Tour::STATUS_ONGOING,
+        ];
+
+        $expired_tour->update($data);
+        TourStatusLog::recordStatusLog($expired_tour, $request);
+        DB::commit();
+      } catch (\Throwable $th) {
+        DB::rollBack();
+        throw $th;
+      }
     } else {
       dd('no data for updating');
     }
