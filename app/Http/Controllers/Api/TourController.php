@@ -17,9 +17,9 @@ class TourController extends Controller
         $this->repo = $repo;
     }
 
-    public function index()
+    public function getAll(Request $request)
     {
-        $tour = $this->repo->index();
+        $tour = $this->repo->index($request);
         if ($tour) {
             $data = TourResource::collection($tour);
             $message = "Tour Data Retrived Successfully";
