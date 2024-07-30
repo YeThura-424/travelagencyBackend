@@ -13,8 +13,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
-        $schedule->command('update:tour-expiry')->dailyAt('22:38');
+        $schedule->command('update:tour-expiry')->dailyAt('21:15');
     }
 
     /**
