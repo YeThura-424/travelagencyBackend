@@ -17,9 +17,28 @@ class TourRepository
     return new Tour();
   }
 
-  public function index()
+  public function index(Request $request)
   {
-    return $this->getModel()->all();
+    $query = $this->getModel();
+    if ($name = $request->code) {
+      $query = $query->where('code', $name);
+    }
+    if ($name = $request->name) {
+      $query = $query->where('name', $name);
+    }
+    if ($description = $request->description) {
+      $query = $query->where('description', 'LIKE', "%.{$description}.%");
+    }
+    if ($start_date = $request->start_date) {
+      $query = $query->whereDate('start_date', Carbon::parse($start_date));
+    }
+    if ($end_date = $request->end_date) {
+      $query = $query->whereDate('end_date', Carbon::parse($end_date));
+    }
+    if ($status = $request->status) {
+      $query = $query->where('status', $status);
+    }
+    return $query->paginate(10);
   }
 
   /**
