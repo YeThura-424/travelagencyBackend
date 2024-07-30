@@ -17,6 +17,8 @@ class DestinationResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
+            'code' => $this->code,
             'destination_name' => $this->name,
             'location' => $this->getLocation(),
             'description' => $this->description,
